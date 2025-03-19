@@ -5,7 +5,7 @@ echo "AutoBlog 모니터링 시스템 시작 중..."
 
 # Docker Compose로 모니터링 컨테이너 시작
 echo "모니터링 컨테이너 시작 중..."
-docker-compose -f docker-compose-monitoring.yml up -d
+docker-compose -f docker-compose.yml up -d
 
 if [ $? -ne 0 ]; then
     echo "오류: Docker 컨테이너 시작 실패! Docker가 설치되어 있고 실행 중인지 확인하세요."
@@ -41,7 +41,7 @@ function cleanup {
     fi
     
     # Docker 컨테이너 종료
-    docker-compose -f docker-compose-monitoring.yml down
+    docker-compose -f docker-compose.yml down
     
     echo "모니터링 시스템이 종료되었습니다."
     exit 0
