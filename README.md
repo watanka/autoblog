@@ -12,6 +12,8 @@
 ### 동작 구조
 ![동작구조](procedure.png)
 
+- 깃 푸쉬 시, hook에 설정된 `post-push` 스크립트를 실행. ssh로 로컬 서버에 코드 복사 후 scheduling 실행.
+
 ### 비용
 - trend parsing
     gnews: 하루에 요청 100개 제한
