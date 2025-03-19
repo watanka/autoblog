@@ -1,0 +1,144 @@
+# 트렌드 파악 관련 설정
+trends:
+  # 트렌드를 수집할 소스 목록
+  sources:
+    - 'gnews'
+    - "naver"
+    # - "newsapi"  # 주석 처리하면 비활성화
+  
+  # GNews 설정
+  gnews:
+    language: 'en' 
+    country: 'us'  
+    max_results: 1  
+    categories:  # 검색할 카테고리
+      - 'technology'
+  
+  # 한 번에 처리할 최대 트렌드 수
+  max_trends: 1
+  
+  # 시간 윈도우 (몇 시간 내의 기사만 분석할지)
+  time_window_hours: 24
+  
+  # 최소 기사 수 (이 수 미만의 기사를 가진 키워드는 제외)
+  min_article_count: 0
+  
+  # 트렌드 분석 설정
+  analysis:
+    # 인기도 임계값 (0-100)
+    popularity_threshold: 0
+    # 수익성 예측 모델 ('basic', 'advanced')
+    revenue_model: 'basic'
+    # 중복 방지를 위한 과거 트렌드 저장 기간 (일)
+    history_days: 30
+    # 특정 키워드 블랙리스트
+    blacklist:
+      - '성인'
+      - '음란'
+      - '도박'
+
+# OpenAI API 관련 설정
+openai:
+  # 사용할 모델
+  model: 'gpt-4o-mini'
+  # 최대 토큰 수
+  max_tokens: 2000
+  # 생성 온도 (0.0-2.0)
+  temperature: 0.7
+  # 프롬프트 설정
+  prompts:
+    # 블로그 포스트 프롬프트
+    blog_post: |
+      당신은 [분야]의 전문가이자 뛰어난 블로그 작가입니다. '[주제]'에 관한 포괄적이고 흥미로운 블로그 게시물을 작성해 주세요. 그리고 한글로 작성해 주세요.
+
+      목표 독자: [독자층 설명]
+      핵심 키워드: [주요 키워드 3-5개]
+
+      다음 구조로 작성해 주세요:
+      1. 제목: 독자의 호기심을 자극하면서 핵심 내용을 담은 매력적인 제목
+      2. 도입부: 독자의 관심을 끌 수 있는 흥미로운 사실이나 통계, 질문으로 시작
+      3. 목차: 주요 섹션을 미리 보여주는 목차
+      4. 배경/서론: 주제에 대한 기본 개념과 역사적 맥락 설명
+      5. 본론: 
+         - 3-5개의 소제목으로 나누어 깊이 있는 내용 다루기
+         - 각 섹션은 구체적인 예시, 데이터, 인용구를 포함할 것
+      6. 결론: 핵심 내용 요약 및 독자에게 생각할 거리 제공
+
+      중요 지침:
+      - 모든 예시와 내용은 구체적이고 실제적이어야 합니다.
+      - 포스트에는 placeholder를 사용하지 마세요.
+      - 예시를 들 때는 항상 구체적인 내용(실제 게임 제목, 가격, 특징 등)을 포함하세요.
+
+      글쓰기 스타일:
+      - 명확하고 간결한 문장 사용
+      - 전문 용어는 사용하되 필요시 간단한 설명 추가
+      - 비유와 예시를 활용해 복잡한 개념 설명
+
+      반환 형식:
+      {
+        "title": "블로그 제목",
+        "content": "마크다운 형식의 블로그 내용"
+      }
+    target_audience: |
+      기술과 트렌드에 관심 있는 20-40대 독자
+
+# 콘텐츠 관련 설정
+content:
+  # 템플릿 설정
+  templates:
+    # Docusaurus 블로그 포스트 템플릿
+    blog: |
+      ---
+      slug: {{slug}}
+      title: {{title}}
+      authors: autoblog
+      tags: [{{tags}}]
+      ---
+
+      {{content}}
+  
+  # 콘텐츠 포맷 설정
+  formatting:
+    # 내부 링크 자동 추가 여부
+    add_internal_links: true
+    # 이미지 생성 활성화 여부
+    generate_images: false
+    # 최소 단어 수
+    min_words: 800
+    # 최대 단어 수
+    max_words: 2000
+
+# 게시 관련 설정
+publishing:
+  # Docusaurus 게시 설정
+  docusaurus:
+    # GitHub 저장소 소유자
+    repo_owner: 'watanka'
+    # GitHub 저장소 이름
+    repo_name: 'autoblog1.github.io'
+    # 기본 브랜치
+    branch: 'main'
+    # 블로그 디렉토리 경로
+    blog_path: 'blog'
+    # 게시 시간 설정 (cron 형식)
+    schedule: '0 8 * * *'  # 매일 오전 8시
+    # 커밋 메시지 템플릿
+    commit_message: '자동 포스팅: {{title}}'
+    author: 'autoblog'
+
+# 시스템 일반 설정
+system:
+  # 데이터 저장 디렉토리
+  data_dir: 'data'
+  # 로그 저장 디렉토리
+  log_dir: 'logs'
+  # 임시 파일 디렉토리
+  temp_dir: 'temp'
+  # 실행 모드 ('production', 'development', 'test')
+  mode: 'development'
+  # 비용 모니터링 설정
+  cost_monitoring:
+    # 최대 일일 API 비용 한도 (달러)
+    max_daily_cost: 5.0
+    # 비용 경고 임계값 (퍼센트)
+    cost_warning_threshold: 80

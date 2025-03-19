@@ -1,0 +1,16 @@
+[Unit]
+Description=AutoBlog Scheduler Service
+After=network.target
+
+[Service]
+Type=simple
+User=watanka
+WorkingDirectory=/path/to/AutoBlog
+ExecStart=/usr/bin/python3 scheduler.py
+Restart=on-failure
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target 

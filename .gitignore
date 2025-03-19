@@ -1,0 +1,40 @@
+# 일반적인 Python 무시 항목
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 가상 환경
+venv/
+ENV/
+
+# IDE 파일
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 로그 및 데이터 파일
+logs/
+data/
+*.log
+
+# 시크릿 파일 (중요)
+config/secrets.yml
+.env
